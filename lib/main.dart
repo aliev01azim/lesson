@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lesson1/account/account.dart';
-import 'package:lesson1/chats/chats.dart';
-import 'package:lesson1/phone/phone.dart';
-import 'package:lesson1/settings/settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,70 +24,88 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int indexOfTab = 0;
-
-  List<Widget> pages = const [
-    AccountPage(),
-    PhonePage(),
-    ChatsPage(),
-    SettingsPage(),
-  ];
+  int counter = 0;
+  int counter2 = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hello world!'),
-      ),
-      body: IndexedStack(
-        index: indexOfTab,
-        children: pages,
-      ),
-      bottomNavigationBar: Container(
-        height: 65,
-        color: Colors.amber,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: indexOfTab,
-          backgroundColor: const Color.fromARGB(255, 1, 27, 41),
-          selectedItemColor: Colors.lightBlueAccent,
-          unselectedItemColor: const Color.fromARGB(255, 160, 159, 159),
-          selectedFontSize: 14.0,
-          unselectedFontSize: 12.0,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.account_circle,
-                  size: 35,
-                ),
-                label: 'Account'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.phone,
-                  size: 35,
-                ),
-                label: 'Phone'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.forum,
-                  size: 35,
-                ),
-                label: 'Forum'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.settings_applications_sharp,
-                  size: 35,
-                ),
-                label: 'Settings'),
-          ],
-          onTap: (value) {
-            setState(() {
-              indexOfTab = value;
-            });
-          },
+      appBar: AppBar(),
+      body: Center(
+        child: CounterProvider(
+          counter: counter,
+          counter2: counter2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    counter++;
+                  });
+                },
+                child: const Text('Жми раз '),
+              ),
+              const TextWidget(),
+              //
+              const SizedBox(height: 50),
+              //
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    counter2++;
+                  });
+                },
+                child: const Text('Жми два'),
+              ),
+              const TextWidget2(),
+            ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class TextWidget extends StatelessWidget {
+  const TextWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // print('textWidget');
+    return Text(
+        '${context.dependOnInheritedWidgetOfExactType<CounterProvider>(aspect: 'one')?.counter}');
+  }
+}
+
+class TextWidget2 extends StatelessWidget {
+  const TextWidget2({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // print('textWidget 2');
+    return Text(
+        '${context.dependOnInheritedWidgetOfExactType<CounterProvider>(aspect: 'two')?.counter2}');
+  }
+}
+
+// Инхерит виджет
+
+class CounterProvider extends InheritedNotifier {
+  final int counter;
+  final int counter2;
+  const CounterProvider(
+      {super.key,
+      required this.counter,
+      required this.counter2,
+      required Widget child})
+      : super(child: child);
+  @override
+  bool updateShouldNotify(covariant CounterProvider oldWidget) {
+    return oldWidget.counter != counter || oldWidget.counter2 != counter2;
   }
 }
