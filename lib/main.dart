@@ -72,7 +72,10 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        context.dependOnInheritedWidgetOfExactType<DataInherit>()?.model.summ();
+        (context.getElementForInheritedWidgetOfExactType<DataInherit>()?.widget
+                as DataInherit)
+            .model
+            .summ();
       },
       child: const Text('Получить результат'),
     );
@@ -93,9 +96,10 @@ class TextFieldWidget2 extends StatelessWidget {
       ),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          context
-              .dependOnInheritedWidgetOfExactType<DataInherit>()
-              ?.model
+          (context
+                  .getElementForInheritedWidgetOfExactType<DataInherit>()
+                  ?.widget as DataInherit)
+              .model
               .secondValue = int.parse(value);
         }
       },
@@ -117,9 +121,10 @@ class TextFieldWidget extends StatelessWidget {
       ),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          context
-              .dependOnInheritedWidgetOfExactType<DataInherit>()
-              ?.model
+          (context
+                  .getElementForInheritedWidgetOfExactType<DataInherit>()
+                  ?.widget as DataInherit)
+              .model
               .firstValue = int.parse(value);
         }
       },
@@ -137,8 +142,11 @@ class DataModel extends ChangeNotifier {
       required this.summa});
 
   void summ() {
+    final oldSumma = summa;
     summa = firstValue + secondValue;
-    notifyListeners();
+    if (oldSumma != summa) {
+      notifyListeners();
+    }
   }
 }
 
