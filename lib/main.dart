@@ -24,42 +24,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int counter = 0;
-  int counter2 = 0;
-  
+  final _data = DataModel(firstValue: 0, secondValue: 0, summa: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: CounterProvider(
-          counter: counter,
-          counter2: counter2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    counter++;
-                  });
-                },
-                child: const Text('Жми раз '),
-              ),
-              const TextWidget(),
-              //
-              const SizedBox(height: 50),
-              //
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    counter2++;
-                  });
-                },
-                child: const Text('Жми два'),
-              ),
-              const TextWidget2(),
-            ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Center(
+          child: DataInherit(
+            model: _data,
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFieldWidget(),
+                TextFieldWidget2(),
+                SizedBox(height: 20),
+                ButtonWidget(),
+                ResiltatWidget(),
+              ],
+            ),
           ),
         ),
       ),
@@ -67,45 +51,99 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class TextWidget extends StatelessWidget {
-  const TextWidget({
+class ResiltatWidget extends StatelessWidget {
+  const ResiltatWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    // print('textWidget');
     return Text(
-        '${context.dependOnInheritedWidgetOfExactType<CounterProvider>(aspect: 'one')?.counter}');
+        'Результат : ${context.dependOnInheritedWidgetOfExactType<DataInherit>()?.model.summa}');
   }
 }
 
-class TextWidget2 extends StatelessWidget {
-  const TextWidget2({
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    // print('textWidget 2');
-    return Text(
-        '${context.dependOnInheritedWidgetOfExactType<CounterProvider>(aspect: 'two')?.counter2}');
+    return ElevatedButton(
+      onPressed: () {
+        context.dependOnInheritedWidgetOfExactType<DataInherit>()?.model.summ();
+      },
+      child: const Text('Получить результат'),
+    );
   }
 }
 
-// Инхерит виджет
+class TextFieldWidget2 extends StatelessWidget {
+  const TextFieldWidget2({
+    super.key,
+  });
 
-class CounterProvider extends InheritedNotifier {
-  final int counter;
-  final int counter2;
-  const CounterProvider(
-      {super.key,
-      required this.counter,
-      required this.counter2,
-      required Widget child})
-      : super(child: child);
   @override
-  bool updateShouldNotify(covariant CounterProvider oldWidget) {
-    return oldWidget.counter != counter || oldWidget.counter2 != counter2;
+  Widget build(BuildContext context) {
+    return TextField(
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        label: Text('второе значение'),
+      ),
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          context
+              .dependOnInheritedWidgetOfExactType<DataInherit>()
+              ?.model
+              .secondValue = int.parse(value);
+        }
+      },
+    );
   }
+}
+
+class TextFieldWidget extends StatelessWidget {
+  const TextFieldWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        label: Text('первое значение'),
+      ),
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          context
+              .dependOnInheritedWidgetOfExactType<DataInherit>()
+              ?.model
+              .firstValue = int.parse(value);
+        }
+      },
+    );
+  }
+}
+
+class DataModel extends ChangeNotifier {
+  int firstValue;
+  int secondValue;
+  int summa;
+  DataModel(
+      {required this.firstValue,
+      required this.secondValue,
+      required this.summa});
+
+  void summ() {
+    summa = firstValue + secondValue;
+    notifyListeners();
+  }
+}
+
+class DataInherit extends InheritedNotifier<DataModel> {
+  final DataModel model;
+  const DataInherit({super.key, required this.model, required Widget child})
+      : super(child: child, notifier: model);
 }
