@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-final _key = GlobalKey<_MyTextWidgetState>();
+import 'api_client.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,46 +25,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<dynamic> posts = [];
+  @override
+  void initState() {
+    getPosts();
+    super.initState();
+  }
+  void getPosts() async {
+    posts = await ApiClient().getPosts();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MyTextWidget(key: _key),
-        const MyTextWidget(key: ValueKey('3')),
-        ElevatedButton(
-          onPressed: () => _key.currentState
-              ?.render2(), //Как вот здесь пробраться к методу render?
-          child: const Text('Нажми меня'),
-        )
-      ],
-    ));
-  }
-}
-
-class MyTextWidget extends StatefulWidget {
-  const MyTextWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyTextWidget> createState() => _MyTextWidgetState();
-}
-
-class _MyTextWidgetState extends State<MyTextWidget> {
-  void render() {
-    setState(() {});
-  }
-
-  void render2() {
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final number = Random().nextInt(100);
-    return Text(
-      '$number',
-      style: const TextStyle(fontSize: 40),
+      backgroundColor: Colors.black,
+      body: ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) => Column(
+          children: [
+            ListTile(
+              trailing: const Icon(Icons.arrow_right),
+              tileColor: Colors.white,
+              title: Text(posts[index]['title']),
+              subtitle: Text(posts[index]['body']),
+            ),
+            const SizedBox(height: 10)
+          ],
+        ),
+      ),
     );
   }
 }
