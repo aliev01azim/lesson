@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lesson1/infrastructure/utils/consts.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
+import '../../../../infrastructure/utils/routes.dart';
 import '../../../widgets/text_field.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/mini_button.dart';
@@ -55,9 +56,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         hide = !hide;
                       });
                     },
-                    child: Icon(hide
-                        ? Icons.remove_red_eye_outlined
-                        : Icons.visibility_off_outlined,color: Colors.white,)),
+                    child: Icon(
+                      hide
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.visibility_off_outlined,
+                      color: Colors.white,
+                    )),
                 keyboardType: TextInputType.emailAddress,
                 prefix: const SizedBox(width: 16),
                 validator: (p0) {
@@ -92,7 +96,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               child: MiniBtn(
                 onTap: () {
                   if (formKey.currentState?.validate() == true) {
-                    // Navigator.of(context).pushNamed(routeName)
+                    Navigator.of(context).pushNamed(AppRoutes.gender);
                   }
                 },
                 text: 'Next',

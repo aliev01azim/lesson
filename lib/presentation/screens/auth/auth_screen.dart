@@ -26,7 +26,7 @@ class AuthScreen extends StatelessWidget {
             const SizedBox(height: 74),
             const SignUpBtn(),
             const SizedBox(height: 8),
-            AutBtn(
+            AuthBtn(
               onTap: () {
                 print('google button tapped');
               },
@@ -34,7 +34,7 @@ class AuthScreen extends StatelessWidget {
               text: 'Continue with Google',
             ),
             const SizedBox(height: 11),
-            AutBtn(
+            AuthBtn(
               onTap: () {
                 print('facebook button tapped');
               },
