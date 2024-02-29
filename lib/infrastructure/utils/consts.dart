@@ -7,9 +7,9 @@ class Images {
   static const googleSvg = 'assets/images/google.svg';
   static const verified = 'assets/images/verified.svg';
   static const f = 'assets/images/f.svg';
-  static const i1 = 'assets/images/1.svg';
-  static const i2 = 'assets/images/2.svg';
-  static const i3 = 'assets/images/3.svg';
+  static const i1 = 'assets/images/1.png';
+  static const i2 = 'assets/images/2.png';
+  static const i3 = 'assets/images/3.png';
   static const i01 = 'assets/images/01.svg';
   static const i02 = 'assets/images/02.svg';
   static const i001 = 'assets/images/001.svg';
@@ -25,4 +25,8 @@ class AppColors {
   static const red = Color.fromRGBO(195, 44, 48, 1);
 }
 
+class Boxes{
+  static const String userBox = 'userBox';
+}
 
+enum UserBox{email,password,gender,artists}

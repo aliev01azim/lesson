@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lesson1/infrastructure/utils/routes.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
 import '../../../infrastructure/utils/consts.dart';
@@ -27,7 +28,7 @@ class AuthScreen extends StatelessWidget {
             const SizedBox(height: 74),
             const SignUpBtn(),
             const SizedBox(height: 8),
-            AutBtn(
+            AuthBtn(
               onTap: () {
                 print('google button tapped');
               },
@@ -35,7 +36,7 @@ class AuthScreen extends StatelessWidget {
               text: 'Continue with Google',
             ),
             const SizedBox(height: 11),
-            AutBtn(
+            AuthBtn(
               onTap: () {
                 print('facebook button tapped');
               },
@@ -43,7 +44,11 @@ class AuthScreen extends StatelessWidget {
               text: 'Continue with Facebook',
             ),
             const SizedBox(height: 11),
-            const ButtonText(),
+            ButtonText(
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.login); 
+              },
+            ),
           ],
         ),
       ),

@@ -4,8 +4,8 @@ import 'package:lesson1/infrastructure/utils/consts.dart';
 
 import '../../../../infrastructure/utils/styles.dart';
 
-class AutBtn extends StatelessWidget {
-  const AutBtn(
+class AuthBtn extends StatelessWidget {
+  const AuthBtn(
       {super.key, required this.onTap, required this.path, required this.text});
   final String text;
   final String path;

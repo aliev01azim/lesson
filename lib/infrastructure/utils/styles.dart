@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lesson1/infrastructure/utils/consts.dart';
 
 class TextStyles {
   static TextStyle main(
@@ -45,6 +46,15 @@ class TextStyles {
           {double fontSize = 14,
           FontWeight fontWeight = FontWeight.bold,
           Color color = Colors.white}) =>
+      TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      );
+  static TextStyle searchHint(
+          {double fontSize = 12,
+          FontWeight fontWeight = FontWeight.bold,
+          Color color = AppColors.black}) =>
       TextStyle(
         color: color,
         fontSize: fontSize,
