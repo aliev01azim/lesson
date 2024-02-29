@@ -18,7 +18,7 @@ class SignUpBtn extends StatelessWidget {
           ),
         ),
         fixedSize: MaterialStateProperty.all(
-          const Size(double.infinity, 45),
+          const Size(double.maxFinite, 45),
         ),
       ),
       onPressed: () => Navigator.of(context).pushNamed(AppRoutes.email),

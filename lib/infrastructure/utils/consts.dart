@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../presentation/screens/auth/auth_screen.dart';
-import '../../presentation/screens/auth/sign_up/email_screen.dart';
 
 class Images {
   static const logo = 'assets/images/spotify.png';

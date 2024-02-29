@@ -15,9 +15,10 @@ class AuthScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const Spacer(),
             Image.asset(Images.logo),
+            const Spacer(),
             Text(
               'Millions of songs.\nFree on Spotify.',
               style: TextStyles.textBig(),

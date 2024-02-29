@@ -13,26 +13,33 @@ class AutBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => onTap(),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
-              side: const BorderSide(color: AppColors.greyDark),
-            ),
-          ),
-          fixedSize: MaterialStateProperty.all(
-            const Size(double.infinity, 45),
+      onPressed: () => onTap(),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50.0),
+            side: const BorderSide(color: AppColors.greyDark),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SvgPicture.asset(path),
-            Text(text, style: TextStyles.textButton(),),
-            SvgPicture.asset(path,color: Colors.transparent,),
-          ],
-        ));
+        fixedSize: MaterialStateProperty.all(
+          const Size(double.infinity, 45),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(path),
+          Text(
+            text,
+            style: TextStyles.textButton(),
+          ),
+          SvgPicture.asset(
+            path,
+            color: Colors.transparent,
+          ),
+        ],
+      ),
+    );
   }
 }
