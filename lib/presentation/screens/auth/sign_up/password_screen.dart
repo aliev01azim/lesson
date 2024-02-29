@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/consts.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
@@ -94,9 +95,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
             Align(
               alignment: Alignment.center,
               child: MiniBtn(
-                onTap: () {
+                onTap: () async {
                   if (formKey.currentState?.validate() == true) {
-                    Navigator.of(context).pushNamed(AppRoutes.gender);
+                    final userBox = Hive.box(Boxes.userBox);
+                    await userBox.put(UserBox.password.name, _controller.text);
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed(AppRoutes.gender);
+                    }
                   }
                 },
                 text: 'Next',

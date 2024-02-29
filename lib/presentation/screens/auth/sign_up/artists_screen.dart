@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/consts.dart';
 import 'package:lesson1/infrastructure/utils/routes.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
@@ -19,8 +20,8 @@ class ArtistsScreen extends StatefulWidget {
 
 class _ArtistsScreenState extends State<ArtistsScreen> {
   final controller = TextEditingController();
-  final artists = [
-    {'image': Images.i1, 'name': 'Sơn Tùng M-TP'},
+  List<Map<String, dynamic>> artists = [
+    {'image': Images.i1, 'name': 'Son Tùng M-TP'},
     {'image': Images.i2, 'name': 'Ed Sheeran'},
     {'image': Images.i3, 'name': 'Charlie Puth'},
     {'image': Images.i1, 'name': 'MONO'},
@@ -33,7 +34,14 @@ class _ArtistsScreenState extends State<ArtistsScreen> {
     {'image': Images.i2, 'name': 'Vũ.'},
     {'image': Images.i3, 'name': 'Alan Walker'},
   ];
-  List selectedArtists = [];
+  late List<Map<String, dynamic>> sortedArtists;
+  @override
+  void initState() {
+    sortedArtists = artists;
+    super.initState();
+  }
+
+  List<Map<String, dynamic>> selectedArtists = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,7 +63,11 @@ class _ArtistsScreenState extends State<ArtistsScreen> {
                 controller: controller,
                 onChanged: (value) {
                   setState(() {
-                    
+                    sortedArtists = artists
+                        .where((element) => element['name']
+                            .toLowerCase()
+                            .contains(value.toLowerCase()))
+                        .toList();
                   });
                 },
                 hintStyle: TextStyles.searchHint(),
@@ -71,26 +83,33 @@ class _ArtistsScreenState extends State<ArtistsScreen> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, mainAxisSpacing: 22),
                   itemBuilder: (context, index) => ArtistItem(
-                    name: artists[index]['name']!,
-                    path: artists[index]['image']!,
+                    name: sortedArtists[index]['name']!,
+                    path: sortedArtists[index]['image']!,
                     onTap: () {
                       setState(() {
-                        if (selectedArtists.contains(artists[index])) {
-                          selectedArtists.remove(artists[index]);
+                        if (selectedArtists.contains(sortedArtists[index])) {
+                          selectedArtists.remove(sortedArtists[index]);
                         } else {
-                          selectedArtists.add(artists[index]);
+                          selectedArtists.add(sortedArtists[index]);
                         }
                       });
                     },
-                    selected: selectedArtists.contains(artists[index]),
+                    selected: selectedArtists.contains(sortedArtists[index]),
                   ),
-                  itemCount: artists.length,
+                  itemCount: sortedArtists.length,
                 ),
               ),
               Align(
                 alignment: Alignment.center,
                 child: MiniBtn(
-                  onTap: () {},
+                  onTap: () async {
+                    final userBox = Hive.box(Boxes.userBox);
+                    await userBox.put(UserBox.artists.name, selectedArtists);
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed(AppRoutes.success,
+                          arguments: selectedArtists);
+                    }
+                  },
                   text: 'Next',
                   enable: selectedArtists.length >= 3,
                 ),

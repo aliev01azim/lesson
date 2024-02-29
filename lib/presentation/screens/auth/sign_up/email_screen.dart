@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/routes.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
+import '../../../../infrastructure/utils/consts.dart';
 import '../../../widgets/text_field.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/mini_button.dart';
@@ -74,9 +76,13 @@ class _EmailScreenState extends State<EmailScreen> {
             Align(
               alignment: Alignment.center,
               child: MiniBtn(
-                onTap: () {
+                onTap: () async {
                   if (formKey.currentState?.validate() == true) {
-                    Navigator.of(context).pushNamed(AppRoutes.password);
+                    final userBox = Hive.box(Boxes.userBox);
+                    await userBox.put(UserBox.email.name, _controller.text);
+                    if (context.mounted) {
+                      Navigator.of(context).pushNamed(AppRoutes.password);
+                    }
                   }
                 },
                 text: 'Next',

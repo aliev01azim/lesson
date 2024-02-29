@@ -27,4 +27,8 @@ class AppColors {
   static const red = Color.fromRGBO(195, 44, 48, 1);
 }
 
+class Boxes{
+  static const String userBox = 'userBox';
+}
 
+enum UserBox{email,password,gender,artists}

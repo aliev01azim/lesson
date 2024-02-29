@@ -67,6 +67,7 @@ class _CTextFieldState extends State<CTextField> {
       valueListenable: _myFocusNotifier,
       builder: (_, isFocus, child) {
         return TextFormField(
+          controller: widget.controller,
           style: widget.style??TextStyles.textButton(),
           obscureText: widget.obscureText,
           keyboardType: widget.keyboardType,

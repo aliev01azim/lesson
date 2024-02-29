@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/routes.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
+import '../../../../infrastructure/utils/consts.dart';
 import '../../../widgets/text_field.dart';
 import '../../../widgets/wrap_item.dart';
 import '../widgets/app_bar.dart';
@@ -45,8 +47,12 @@ class _GenderScreenState extends State<GenderScreen> {
               children: genders
                   .map((e) => WrapItem(
                         text: e,
-                        onTap: () {
-                          Navigator.of(context).pushNamed(AppRoutes.artists);
+                        onTap: () async {
+                          final userBox = Hive.box(Boxes.userBox);
+                          await userBox.put(UserBox.gender.name, e);
+                          if (context.mounted) {
+                            Navigator.of(context).pushNamed(AppRoutes.artists);
+                          }
                         },
                       ))
                   .toList(),
