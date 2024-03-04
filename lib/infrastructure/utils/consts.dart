@@ -11,10 +11,7 @@ class Images {
   static const i2 = 'assets/images/2.png';
   static const i3 = 'assets/images/3.png';
   static const i01 = 'assets/images/01.png';
-  // static const i02 = 'assets/images/02.svg';
-  // static const i001 = 'assets/images/001.svg';
-  // static const i002 = 'assets/images/002.svg';
-  // static const i003 = 'assets/images/003.svg';
+  static const irect = 'assets/images/artist_rectangle.png';
 }
 
 class AppColors {

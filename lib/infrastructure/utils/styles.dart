@@ -36,9 +36,9 @@ class TextStyles {
         fontWeight: fontWeight,
       );
   static TextStyle textTitle(
-          {double fontSize = 24, FontWeight fontWeight = FontWeight.bold}) =>
+          {double fontSize = 24, FontWeight fontWeight = FontWeight.bold,Color color = Colors.white}) =>
       TextStyle(
-        color: Colors.white,
+        color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
       );

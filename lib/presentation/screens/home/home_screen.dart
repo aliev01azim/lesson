@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/consts.dart';
@@ -49,29 +50,61 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: page[currerntIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currerntIndex,
-        onTap: onTap,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black87,
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey.withOpacity(0.5),
-        showUnselectedLabels: true,
-        elevation: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_add),
-            label: 'Library',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 100,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: currerntIndex,
+          onTap: onTap,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey.withOpacity(0.5),
+          showUnselectedLabels: true,
+          // elevation: 10,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home_filled),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.library_music_outlined),
+              activeIcon: Icon(Icons.library_music),
+              label: 'Library',
+            ),
+          ],
+        ),
       ),
     );
   }
