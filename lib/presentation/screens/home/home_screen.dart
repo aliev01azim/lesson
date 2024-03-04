@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List page = const [
+  List page =  [
     HomePage(),
     SearchPage(),
     LibraryPage(),
