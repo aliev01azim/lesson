@@ -6,12 +6,13 @@ import 'package:lesson1/infrastructure/utils/styles.dart';
 // ignore: must_be_immutable
 class CustomAppbar extends StatelessWidget {
   final String text;
-  List<Widget> icons = [];
-
-  CustomAppbar({
+  final List<Widget> icons;
+  final String? ava;
+  const CustomAppbar({
     Key? key,
     required this.text,
     required this.icons,
+    this.ava,
   }) : super(key: key);
 
   @override
@@ -19,10 +20,20 @@ class CustomAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: TextStyles.textTitle(),
-        ),
+        Row(
+          children: [
+            if (ava != null) ...[
+              CircleAvatar(
+                backgroundImage: AssetImage(ava!),
+              ),
+              const SizedBox(width: 16),
+            ],
+            Text(
+              text,
+              style: TextStyles.textTitle(),
+            ),
+          ],
+        ),  
         Row(
           mainAxisSize: MainAxisSize.min,
           children: icons,

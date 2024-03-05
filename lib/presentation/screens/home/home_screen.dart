@@ -16,9 +16,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List page =  [
-    HomePage(),
-    SearchPage(),
-    LibraryPage(),
+    const HomePage(),
+    const SearchPage(),
+    const LibraryPage(),
   ];
 
   int currerntIndex = 0;
@@ -33,77 +33,70 @@ class _HomeScreenState extends State<HomeScreen> {
     print('ключи - ${userBox.keys}');
     print('значения - ${userBox.values}');
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home page'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await userBox.clear();
-              if (context.mounted) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.main, (Route route) => false);
-              }
-            },
-            icon: const Icon(Icons.logout),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: const Text('Home page'),
+        //   actions: [
+        //     IconButton(
+        //       onPressed: () async {
+        //         await userBox.clear();
+        //         if (context.mounted) {
+        //           Navigator.of(context).pushNamedAndRemoveUntil(
+        //               AppRoutes.main, (Route route) => false);
+        //         }
+        //       },
+        //       icon: const Icon(Icons.logout),
+        //     ),
+        //   ],
+        // ),
+        body: page[currerntIndex],
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                spreadRadius: 30,
+                color: Color.fromARGB(107, 0, 0, 0),
+                blurRadius: 70,
+              ),
+              BoxShadow(
+                spreadRadius: 30,
+                color: Color.fromARGB(116, 0, 0, 0),
+                blurRadius: 70,
+              ),
+              BoxShadow(
+                spreadRadius: 30,
+                color: Color.fromARGB(75, 0, 0, 0),
+                blurRadius: 70,
+              ),
+            ],
           ),
-        ],
-      ),
-      body: page[currerntIndex],
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 100,
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: currerntIndex,
-          onTap: onTap,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.black,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey.withOpacity(0.5),
-          showUnselectedLabels: true,
-          // elevation: 10,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home_filled),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.library_music_outlined),
-              activeIcon: Icon(Icons.library_music),
-              label: 'Library',
-            ),
-          ],
+          child: BottomNavigationBar(
+            currentIndex: currerntIndex,
+            onTap: onTap,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.black,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.grey.withOpacity(0.5),
+            showUnselectedLabels: true,
+            // elevation: 10,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(Icons.home_filled),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.library_music_outlined),
+                activeIcon: Icon(Icons.library_music),
+                label: 'Library',
+              ),
+            ],
+          ),
         ),
       ),
     );

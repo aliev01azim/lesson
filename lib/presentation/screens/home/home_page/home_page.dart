@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> artists = [
+  final List<Map<String, dynamic>> artists = [
     {'image': Images.i01, 'name': 'MAKING MY WAY'},
     {'image': Images.i01, 'name': 'Sơn Tùng M-TP'},
     {'image': Images.i01, 'name': 'Ed Sheeran'},
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     },
     {'image': Images.i01, 'name': 'Charlie Puth'},
   ];
-  List<String> artistsRectangle = [
+  final List<String> artistsRectangle = [
     Images.irect,
     Images.irect,
     Images.irect,
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
     Images.irect,
     Images.irect
   ];
+  final List<String> menuItems = ['Music', 'Podcasts & Shows'];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,12 +74,14 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             const SizedBox(height: 14),
-            const Row(
-              children: [
-                MenuItem(text: 'Music'),
-                SizedBox(width: 8),
-                MenuItem(text: 'Podcasts & Shows'),
-              ],
+            SizedBox(
+              height: 30,
+              child: ListView.separated(
+                itemBuilder: (_, index) => MenuItem(text: menuItems[index]),
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemCount: menuItems.length,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
             const SizedBox(height: 20),
             GridView.builder(
