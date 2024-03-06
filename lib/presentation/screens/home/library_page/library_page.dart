@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lesson1/infrastructure/utils/consts.dart';
-import 'package:lesson1/presentation/screens/home/widgets/library_item.dart';
+import 'package:lesson1/presentation/screens/home/widgets/library_grid_item.dart';
 import 'package:lesson1/presentation/widgets/custom_appbar.dart';
 
 import '../../../widgets/menu_item.dart';
+import '../widgets/library_row_item.dart';
 import '../widgets/sort_row.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -99,6 +100,7 @@ class _LibraryPageState extends State<LibraryPage> {
     'Albums',
     'Artists'
   ];
+  bool isGrid = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -142,20 +144,31 @@ class _LibraryPageState extends State<LibraryPage> {
         const SizedBox(height: 8),
         const Divider(thickness: 1, color: AppColors.greyDark),
         const SizedBox(height: 12),
-        const SortRow(),
+        SortRow(
+          callBack: () => setState(() => isGrid = !isGrid),
+          isGrid:isGrid,
+        ),
         const SizedBox(height: 12),
         Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: 10 / 12),
-            itemBuilder: (context, index) => LibraryItem(
-              item: data[index],
-            ),
-            itemCount: data.length,
-          ),
+          child: isGrid
+              ? GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: 10 / 12),
+                  itemBuilder: (context, index) => LibraryGridItem(
+                    item: data[index],
+                  ),
+                  itemCount: data.length,
+                )
+              : ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) => LibraryRowItem(
+                    item: data[index],
+                  ),
+                  itemCount: data.length,
+                ),
         ),
       ],
     );

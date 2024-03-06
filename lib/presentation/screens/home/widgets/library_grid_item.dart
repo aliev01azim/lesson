@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
 
-class LibraryItem extends StatelessWidget {
-  const LibraryItem({super.key, required this.item});
+class LibraryGridItem extends StatelessWidget {
+  const LibraryGridItem({super.key, required this.item});
   final Map<String, dynamic> item;
   @override
   Widget build(BuildContext context) {
