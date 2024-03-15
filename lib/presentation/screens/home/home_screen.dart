@@ -35,21 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Home page'),
-        //   actions: [
-        //     IconButton(
-        //       onPressed: () async {
-        //         await userBox.clear();
-        //         if (context.mounted) {
-        //           Navigator.of(context).pushNamedAndRemoveUntil(
-        //               AppRoutes.main, (Route route) => false);
-        //         }
-        //       },
-        //       icon: const Icon(Icons.logout),
-        //     ),
-        //   ],
-        // ),
+        appBar: AppBar(
+          title: const Text('Home page'),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await userBox.clear();
+                if (context.mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.main, (Route route) => false);
+                }
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
         body: page[currerntIndex],
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(

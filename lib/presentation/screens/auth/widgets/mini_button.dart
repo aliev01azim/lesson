@@ -4,10 +4,16 @@ import 'package:lesson1/infrastructure/utils/styles.dart';
 
 class MiniBtn extends StatelessWidget {
   const MiniBtn(
-      {super.key, required this.onTap, required this.text, this.enable = true});
+      {super.key,
+      required this.onTap,
+      required this.text,
+      this.enable = true,
+      this.isLoading = false});
   final Function onTap;
   final String text;
   final bool enable;
+  final bool isLoading;
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -24,12 +30,14 @@ class MiniBtn extends StatelessWidget {
         ),
       ),
       onPressed: enable ? () => onTap() : null,
-      child: Text(
-        text,
-        style: TextStyles.textButton(
-          color: AppColors.black,
-        ),
-      ),
+      child: isLoading
+          ? const SizedBox(height: 15,width: 15,child: CircularProgressIndicator(color: Colors.black,))
+          : Text(
+              text,
+              style: TextStyles.textButton(
+                color: AppColors.black,
+              ),
+            ),
     );
   }
 }

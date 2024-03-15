@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:lesson1/infrastructure/utils/routes.dart';
 import 'package:lesson1/infrastructure/utils/styles.dart';
@@ -7,6 +8,7 @@ import '../../../../infrastructure/utils/consts.dart';
 import '../../../widgets/text_field.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/mini_button.dart';
+import 'bloc/login_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -124,23 +126,27 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24),
               Align(
                 alignment: Alignment.center,
-                child: MiniBtn(
-                  onTap: () async {
-                    if (formKey.currentState?.validate() == true) {
-                      final userBox = Hive.box(Boxes.userBox);
-                      await userBox.put(
-                          UserBox.email.name, _emailController.text);
-                      await userBox.put(
-                          UserBox.password.name, _passwordController.text);
-
-                      if (context.mounted) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            AppRoutes.main, (Route route) => false);
-                      }
+                child: BlocConsumer<LoginBloc, LoginState>(
+                  builder: (context, state) {
+                    return MiniBtn(
+                      isLoading: state is LoginLoading,
+                      onTap: () async {
+                        if (formKey.currentState?.validate() == true) {
+                          context.read<LoginBloc>().add(LoginOnTap(
+                              email: _emailController.text,
+                              password: _passwordController.text));
+                        }
+                      },
+                      text: 'Next',
+                      enable: emailEnable && passwordEnable,
+                    );
+                  },
+                  listener: (BuildContext context, LoginState state) {
+                    if (state is LoginLoaded) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppRoutes.main, (Route route) => false);
                     }
                   },
-                  text: 'Next',
-                  enable: emailEnable && passwordEnable,
                 ),
               ),
               const SizedBox(height: 24),

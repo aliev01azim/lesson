@@ -12,7 +12,7 @@ class LibraryGridItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 120,
+          height: 110,
           width: double.maxFinite,
           decoration: item['isCircle'] != null
               ? null
